@@ -1,5 +1,5 @@
-require 'hirb'
-require 'method_profiler/hirb'
+#require 'hirb'
+#require 'method_profiler/hirb'
 
 module MethodProfiler
   # Sorts and displays data collected by a {Profiler}.
@@ -76,21 +76,24 @@ module MethodProfiler
     # @return [String] A table of profiling results.
     #
     def to_s
-      [
-        "MethodProfiler results for: #{@name}",
-        Hirb::Helpers::Table.render(
-          to_a,
-          headers: HEADERS.dup,
-          fields: FIELDS.dup,
-          filters: {
-            min: :to_milliseconds,
-            max: :to_milliseconds,
-            average: :to_milliseconds,
-            total_time: :to_milliseconds,
-          },
-          description: false
-        )
-      ].join("\n")
+      # TODO: Make a good string (try motion red-green)
+      return "MethodProfiler results for: #{@name}\n" +
+             "#{@data}"
+      #[
+      #  "MethodProfiler results for: #{@name}",
+      #  Hirb::Helpers::Table.render(
+      #    to_a,
+      #    headers: HEADERS.dup,
+      #    fields: FIELDS.dup,
+      #    filters: {
+      #      min: :to_milliseconds,
+      #      max: :to_milliseconds,
+      #      average: :to_milliseconds,
+      #      total_time: :to_milliseconds,
+      #    },
+      #    description: false
+      #  )
+      #].join("\n")
     end
   end
 end

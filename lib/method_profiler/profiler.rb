@@ -1,12 +1,9 @@
-require 'method_profiler/report'
-
-require 'benchmark'
-
 module MethodProfiler
   # Observes an object, keeping track of all its method calls and the wall clock
   # time spent executing them.
   #
   class Profiler
+
     # Initializes a new {Profiler}. Wraps all methods in the object and its singleton
     # class with profiling code.
     #
@@ -16,7 +13,7 @@ module MethodProfiler
       @obj = obj
       @data = Hash.new { |h, k| h[k] = [] }
 
-      wrap_methods_with_profiling
+      wrap_methods_with_profiling(self)
     end
 
     # Generates a report object with all the data collected so far bay the profiler. This report
@@ -30,8 +27,7 @@ module MethodProfiler
 
     private
 
-    def wrap_methods_with_profiling
-      profiler = self
+    def wrap_methods_with_profiling(profiler)
 
       [
         { object: @obj.singleton_class, methods: @obj.methods(false), private: false, singleton: true },
@@ -48,19 +44,24 @@ module MethodProfiler
 
             alias_method "#{method}_without_profiling", method
             alias_method method, "#{method}_with_profiling"
-
-            private "#{method}_with_profiling" if group[:private]
           end
         end
       end
     end
 
+    # Profiles the block and records the elapsed time.
     def profile(method, options = {}, &block)
       method_name = options[:singleton] ? ".#{method}" : "##{method}"
       elapsed_time, result = benchmark(block)
-      elapsed_time = elapsed_time.to_s.match(/\(\s*([^\)]+)\)/)[1].to_f
       @data[method_name] << elapsed_time
       result
+    end
+
+    # Returns the elapsed time taken for block_to_benchmark.
+    def benchmark(block_to_benchmark)
+      result = nil
+      elapsed_time = Benchmark.realtime { result = block_to_benchmark.call }
+      return elapsed_time, result
     end
 
     def final_data
@@ -81,12 +82,6 @@ module MethodProfiler
       end
 
       results
-    end
-
-    def benchmark(block_to_benchmark)
-      result = nil
-      elapsed_time = Benchmark.measure { result = block_to_benchmark.call }
-      return elapsed_time, result
     end
   end
 end

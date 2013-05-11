@@ -1,4 +1,6 @@
+=begin
 class Petition
+
   def self.hay
   end
 
@@ -38,3 +40,4 @@ class Petition
     "secret"
   end
 end
+=end

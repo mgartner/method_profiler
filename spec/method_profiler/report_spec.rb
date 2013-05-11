@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 
 describe MethodProfiler::Report do
@@ -88,3 +89,4 @@ describe MethodProfiler::Report do
     end
   end
 end
+=end

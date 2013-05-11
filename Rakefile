@@ -1,7 +1,11 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+$:.unshift("/Library/RubyMotion/lib")
+require 'motion/project'
+#require "bundler/gem_tasks"
 
-desc "Run specs"
-RSpec::Core::RakeTask.new(:spec)
+$:.unshift("./lib/")
+require './lib/method_profiler.rb'
 
-task :default => :spec
+Motion::Project::App.setup do |app|
+  # Use `rake config' to see complete project settings.
+  app.name = 'method_profiler'
+end
