@@ -1,14 +1,9 @@
-module MethodProfiler
-  # Observes an object, keeping track of all its method calls and the wall clock
-  # time spent executing them.
-  #
+module Velocity
+
+  # Velocity::Profiler collects execution time of method calls of an object.
   class Profiler
 
-    # Initializes a new {Profiler}. Wraps all methods in the object and its singleton
-    # class with profiling code.
-    #
-    # @param [Object] obj The object to observe.
-    #
+    # Initializes a new Profiler to observe the given object.
     def initialize(obj)
       @obj = obj
       @data = Hash.new { |h, k| h[k] = [] }
@@ -16,19 +11,15 @@ module MethodProfiler
       wrap_methods_with_profiling(self)
     end
 
-    # Generates a report object with all the data collected so far bay the profiler. This report
-    # can be displayed in various ways. See {Report}.
-    #
-    # @return [Report] A new report with all the data the profiler has collected.
-    #
+    # Returns a report of the profile data collected on the object.
     def report
       Report.new(final_data, @obj.name)
     end
 
     private
 
+    # Wraps all the methods of @obj to calculate exectuion time.
     def wrap_methods_with_profiling(profiler)
-
       [
         { object: @obj.singleton_class, methods: @obj.methods(false), private: false, singleton: true },
         { object: @obj, methods: @obj.instance_methods(false), private: false },
@@ -60,10 +51,12 @@ module MethodProfiler
     # Returns the elapsed time taken for block_to_benchmark.
     def benchmark(block_to_benchmark)
       result = nil
-      elapsed_time = Benchmark.realtime { result = block_to_benchmark.call }
-      return elapsed_time, result
+      t0 = Time.now
+      result = block_to_benchmark.call
+      return Time.now - t0, result
     end
 
+    # Compiles the collected data into several useful catagories.
     def final_data
       results = []
 
@@ -83,5 +76,6 @@ module MethodProfiler
 
       results
     end
+
   end
 end
