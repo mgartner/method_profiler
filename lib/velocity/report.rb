@@ -54,10 +54,9 @@ module Velocity
 
     # Returns a printable string of the sorted data.
     def to_s
-      # TODO: Make a good string (try motion red-green)
-      string = "\nVelocity results for: #{@name}\n"
+      string = "\nVelocity results for: #{@name}\n".light_blue
       self.to_a.each do |method_data|
-        string += "-- #{method_data.shift[1]}\n"
+        string += "-- #{method_data.shift[1]}\n".red
         method_data.each_pair do |metric, time|
           if time.is_a?(Float)
             time = time.to_ms
