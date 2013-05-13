@@ -4,7 +4,7 @@ require 'bundler/gem_tasks'
 require 'bundler/setup'
 
 $:.unshift("./lib/")
-require './lib/velocity.rb'
+require './lib/motion-profiler.rb'
 
 require 'motion-colorize'
 

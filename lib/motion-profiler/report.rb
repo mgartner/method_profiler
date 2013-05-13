@@ -6,7 +6,7 @@ class Float
   end
 end
 
-module Velocity
+module MotionProfiler
 
   # Sorts and displays data collected by a Profiler.
   class Report

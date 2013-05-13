@@ -1,4 +1,4 @@
-module Velocity
+module MotionProfiler
 
   # Velocity::Profiler collects execution time of method calls of an object.
   class Profiler

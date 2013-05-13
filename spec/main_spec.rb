@@ -3,7 +3,7 @@ describe "Velocity" do
     @app = UIApplication.sharedApplication
   end
   it "should profile the class" do
-    profiler = Velocity.observe(Lion)
+    profiler = MotionProfiler.observe(Lion)
 
     lion = Lion.new
     lion.hunt
