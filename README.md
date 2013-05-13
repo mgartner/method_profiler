@@ -1,7 +1,6 @@
 # MotionProfiler
 
-**MotionProfiler** is a method profiler for RubyMotion based off of [GitHub](http://github.com).collects performance information about the methods in your objects and creates reports to help you identify slow methods. The collected data can be sorted in various ways, converted into an array, or pretty printed as a table.
-
+**MotionProfiler** is a method profiler for RubyMotion based off of [method_profiler](http://github.com/change/method_profiler). It can help you identify slow methods in your app.
 ## Basic usage
 
 ```ruby
